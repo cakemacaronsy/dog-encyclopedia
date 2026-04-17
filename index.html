@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DOG — 犬</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital@0;1&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #000;
@@ -15,18 +15,16 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
     background: var(--white);
     color: var(--black);
-    font-family: 'Lora', serif;
+    font-family: 'Lora', 'Noto Serif JP', serif;
     overflow-x: hidden;
     cursor: crosshair;
   }
 
-  /* ── NOISE TEXTURE OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -36,6 +34,31 @@
     z-index: 9999;
     opacity: 0.4;
   }
+
+  /* ── LANG SWITCHER ── */
+  .lang-switch {
+    position: fixed;
+    top: 52px;
+    right: 20px;
+    z-index: 200;
+    display: flex;
+    border: 2px solid var(--black);
+    background: var(--white);
+  }
+  .lang-btn {
+    padding: 8px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray);
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn.active { background: var(--black); color: var(--white); }
+  .lang-btn:hover:not(.active) { background: var(--light); color: var(--black); }
+  .lang-sep { width: 2px; background: var(--black); flex-shrink: 0; }
 
   /* ── TICKER ── */
   .ticker {
@@ -51,7 +74,7 @@
   .ticker-inner {
     display: flex;
     gap: 60px;
-    animation: ticker 30s linear infinite;
+    animation: ticker 35s linear infinite;
     white-space: nowrap;
     font-family: 'Space Mono', monospace;
     font-size: 11px;
@@ -60,10 +83,7 @@
   }
   .ticker-inner span { flex-shrink: 0; }
   .ticker-sep { color: var(--gray); }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ── HERO ── */
   .hero {
@@ -71,7 +91,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-bottom: 3px solid var(--black);
-    position: relative;
   }
   .hero-left {
     padding: 60px 50px;
@@ -97,10 +116,10 @@
     animation: fadeUp 0.8s ease forwards 0.2s;
   }
   .hero-subtitle {
-    font-family: 'Lora', serif;
+    font-family: 'Lora', 'Noto Serif JP', serif;
     font-style: italic;
-    font-size: clamp(14px, 1.8vw, 20px);
-    line-height: 1.6;
+    font-size: clamp(13px, 1.6vw, 19px);
+    line-height: 1.7;
     max-width: 380px;
     color: #333;
     opacity: 0;
@@ -138,7 +157,7 @@
     letter-spacing: 0.15em;
   }
 
-  /* ── STATS BAR ── */
+  /* ── STATS ── */
   .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -162,7 +181,7 @@
   .stat-label {
     font-family: 'Space Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-top: 8px;
     display: block;
@@ -170,7 +189,7 @@
   }
   .stat:hover .stat-label { color: #aaa; }
 
-  /* ── BREEDS ── */
+  /* ── SECTION HEADER ── */
   .section-header {
     padding: 60px 50px 20px;
     display: flex;
@@ -190,6 +209,7 @@
     letter-spacing: 0.2em;
   }
 
+  /* ── BREEDS ── */
   .breeds-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -202,15 +222,14 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: background 0.25s;
+    transition: background 0.25s, color 0.25s;
   }
   .breed-card:nth-child(3n) { border-right: none; }
   .breed-card:nth-child(n+4) { border-bottom: none; }
   .breed-card::after {
     content: '→';
     position: absolute;
-    top: 40px;
-    right: 40px;
+    top: 40px; right: 40px;
     font-size: 20px;
     opacity: 0;
     transform: translateX(-10px);
@@ -221,24 +240,24 @@
   .breed-icon { font-size: 32px; margin-bottom: 16px; display: block; }
   .breed-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(28px, 3vw, 44px);
+    font-size: clamp(26px, 2.8vw, 42px);
     line-height: 1;
     letter-spacing: 0.03em;
     display: block;
     margin-bottom: 12px;
   }
   .breed-desc {
-    font-family: 'Lora', serif;
+    font-family: 'Lora', 'Noto Serif JP', serif;
     font-style: italic;
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.7;
     color: #555;
   }
   .breed-card:hover .breed-desc { color: #bbb; }
   .breed-origin {
     font-family: 'Space Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--gray);
     margin-top: 16px;
@@ -259,8 +278,7 @@
   .pullquote-section::before {
     content: '❝';
     position: absolute;
-    top: -20px;
-    left: 50%;
+    top: -20px; left: 50%;
     transform: translateX(-50%);
     font-size: 200px;
     color: #111;
@@ -269,10 +287,10 @@
     pointer-events: none;
   }
   .pullquote {
-    font-family: 'Lora', serif;
+    font-family: 'Lora', 'Noto Serif JP', serif;
     font-style: italic;
-    font-size: clamp(22px, 4vw, 52px);
-    line-height: 1.3;
+    font-size: clamp(20px, 3.5vw, 48px);
+    line-height: 1.4;
     max-width: 900px;
     margin: 0 auto 30px;
     position: relative;
@@ -287,13 +305,8 @@
   }
 
   /* ── FACTS ── */
-  .facts-section {
-    border-bottom: 3px solid var(--black);
-  }
-  .facts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+  .facts-section { border-bottom: 3px solid var(--black); }
+  .facts-grid { display: grid; grid-template-columns: 1fr 1fr; }
   .fact-item {
     padding: 50px;
     border-right: 2px solid var(--black);
@@ -301,16 +314,14 @@
     position: relative;
   }
   .fact-item:nth-child(2n) { border-right: none; }
-  .fact-item:last-child,
-  .fact-item:nth-last-child(2) { border-bottom: none; }
+  .fact-item:last-child, .fact-item:nth-last-child(2) { border-bottom: none; }
   .fact-number {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 80px;
     line-height: 1;
     color: var(--light);
     position: absolute;
-    top: 20px;
-    right: 30px;
+    top: 20px; right: 30px;
     pointer-events: none;
   }
   .fact-title {
@@ -321,9 +332,9 @@
     display: block;
   }
   .fact-text {
-    font-family: 'Lora', serif;
+    font-family: 'Lora', 'Noto Serif JP', serif;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.8;
     color: #444;
     max-width: 420px;
   }
@@ -336,19 +347,15 @@
     letter-spacing: 20px;
     border-bottom: 3px solid var(--black);
     background: var(--light);
-    overflow: hidden;
   }
-  .paw-divider span {
-    display: inline-block;
-    animation: pawBounce 1.5s ease-in-out infinite;
-  }
+  .paw-divider span { display: inline-block; animation: pawBounce 1.5s ease-in-out infinite; }
   .paw-divider span:nth-child(2) { animation-delay: 0.15s; }
   .paw-divider span:nth-child(3) { animation-delay: 0.3s; }
   .paw-divider span:nth-child(4) { animation-delay: 0.45s; }
   .paw-divider span:nth-child(5) { animation-delay: 0.6s; }
   @keyframes pawBounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50%       { transform: translateY(-8px); }
   }
 
   /* ── FOOTER ── */
@@ -361,12 +368,7 @@
     gap: 40px;
     align-items: end;
   }
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 80px;
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 80px; line-height: 1; letter-spacing: -0.02em; }
   .footer-logo span { color: var(--gray); }
   .footer-text {
     font-family: 'Space Mono', monospace;
@@ -378,19 +380,13 @@
   }
 
   /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ── LANG FADE ── */
+  .lang-fade { transition: opacity 0.25s ease; }
+  .lang-fade.switching { opacity: 0; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
@@ -404,51 +400,30 @@
     .fact-item { border-right: none !important; }
     footer { grid-template-columns: 1fr; }
     .footer-text { text-align: left; }
+    .lang-switch { top: auto; bottom: 20px; right: 20px; }
   }
 </style>
 </head>
 <body>
 
+<!-- LANG SWITCHER -->
+<div class="lang-switch">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <div class="lang-sep"></div>
+  <button class="lang-btn" onclick="setLang('ja')">JA</button>
+</div>
+
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-inner" id="tickerInner">
-    <span>🐾 CANIS LUPUS FAMILIARIS</span>
-    <span class="ticker-sep">///</span>
-    <span>人類最好的朋友 · BEST FRIEND OF HUMANS</span>
-    <span class="ticker-sep">///</span>
-    <span>400+ BREEDS WORLDWIDE</span>
-    <span class="ticker-sep">///</span>
-    <span>15,000 YEARS OF COMPANIONSHIP</span>
-    <span class="ticker-sep">///</span>
-    <span>NOSE PRINTS ARE UNIQUE — LIKE FINGERPRINTS</span>
-    <span class="ticker-sep">///</span>
-    <span>DOGS DREAM DURING REM SLEEP</span>
-    <span class="ticker-sep">///</span>
-    <span>🐾 CANIS LUPUS FAMILIARIS</span>
-    <span class="ticker-sep">///</span>
-    <span>人類最好的朋友 · BEST FRIEND OF HUMANS</span>
-    <span class="ticker-sep">///</span>
-    <span>400+ BREEDS WORLDWIDE</span>
-    <span class="ticker-sep">///</span>
-    <span>15,000 YEARS OF COMPANIONSHIP</span>
-    <span class="ticker-sep">///</span>
-    <span>NOSE PRINTS ARE UNIQUE — LIKE FINGERPRINTS</span>
-    <span class="ticker-sep">///</span>
-    <span>DOGS DREAM DURING REM SLEEP</span>
-    <span class="ticker-sep">///</span>
-  </div>
+  <div class="ticker-inner" id="tickerInner"></div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <span class="hero-eyebrow">Vol. 01 — 犬の百科 · Canine Encyclopedia</span>
+    <span class="hero-eyebrow lang-fade" data-key="eyebrow"></span>
     <div class="hero-title">DOG</div>
-    <p class="hero-subtitle">
-      The wolf that chose us. From the frozen tundra to city apartments —
-      dogs have walked beside humanity for fifteen thousand years,
-      rewriting their own nature to match ours.
-    </p>
+    <p class="hero-subtitle lang-fade" data-key="heroSubtitle"></p>
   </div>
   <div class="hero-right">
     <pre class="dog-ascii">
@@ -479,201 +454,212 @@ o'')}____//
 <div class="stats">
   <div class="stat reveal">
     <span class="stat-number">400+</span>
-    <span class="stat-label">Recognized Breeds</span>
+    <span class="stat-label lang-fade" data-key="stat1"></span>
   </div>
   <div class="stat reveal">
     <span class="stat-number">1B</span>
-    <span class="stat-label">Dogs on Earth</span>
+    <span class="stat-label lang-fade" data-key="stat2"></span>
   </div>
   <div class="stat reveal">
     <span class="stat-number">300M</span>
-    <span class="stat-label">Scent Receptors</span>
+    <span class="stat-label lang-fade" data-key="stat3"></span>
   </div>
   <div class="stat reveal">
     <span class="stat-number">15K</span>
-    <span class="stat-label">Years of History</span>
+    <span class="stat-label lang-fade" data-key="stat4"></span>
   </div>
 </div>
 
 <!-- BREEDS -->
 <div class="section-header reveal">
-  <span class="section-title">BREEDS</span>
-  <span class="section-num">— 06 SELECTED</span>
+  <span class="section-title lang-fade" data-key="breedsTitle"></span>
+  <span class="section-num lang-fade" data-key="breedsSub"></span>
 </div>
-<div class="breeds-grid">
-  <div class="breed-card reveal">
-    <span class="breed-icon">🐕</span>
-    <span class="breed-name">Shiba Inu</span>
-    <p class="breed-desc">Ancient Japanese spitz — spirited, fastidious, and famously vocal. The internet's favorite philosopher.</p>
-    <span class="breed-origin">🗾 Origin: Japan · Antiquity</span>
-  </div>
-  <div class="breed-card reveal">
-    <span class="breed-icon">🦮</span>
-    <span class="breed-name">Border Collie</span>
-    <p class="breed-desc">The most intelligent breed. Bred to herd sheep across Scottish highlands with nothing but a gaze.</p>
-    <span class="breed-origin">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Origin: Scotland · 1800s</span>
-  </div>
-  <div class="breed-card reveal">
-    <span class="breed-icon">🐩</span>
-    <span class="breed-name">Poodle</span>
-    <p class="breed-desc">A water retriever disguised as elegance. Hypoallergenic, hyperintelligent, profoundly misunderstood.</p>
-    <span class="breed-origin">🇩🇪 Origin: Germany · 1600s</span>
-  </div>
-  <div class="breed-card reveal">
-    <span class="breed-icon">🐕‍🦺</span>
-    <span class="breed-name">Siberian Husky</span>
-    <p class="breed-desc">Built for -60°C. Runs 160km per day. Howls instead of barks. Descended from ancient Chukchi sled dogs.</p>
-    <span class="breed-origin">🇷🇺 Origin: Siberia · Ancient</span>
-  </div>
-  <div class="breed-card reveal">
-    <span class="breed-icon">🦴</span>
-    <span class="breed-name">Greyhound</span>
-    <p class="breed-desc">72 km/h. Zero body fat. One of the oldest breeds, depicted in ancient Egyptian tomb paintings.</p>
-    <span class="breed-origin">🏺 Origin: Egypt · 4,000 BCE</span>
-  </div>
-  <div class="breed-card reveal">
-    <span class="breed-icon">🐾</span>
-    <span class="breed-name">Akita</span>
-    <p class="breed-desc">National monument of Japan. Devoted beyond measure — Hachiko waited nine years for a master who never returned.</p>
-    <span class="breed-origin">🗾 Origin: Japan · 1600s</span>
-  </div>
-</div>
+<div class="breeds-grid" id="breedsGrid"></div>
 
 <!-- PULLQUOTE -->
 <div class="pullquote-section reveal">
-  <p class="pullquote">
-    "The dog is the only animal that has seen his god."
-  </p>
-  <span class="pullquote-attr">— Romain Rolland</span>
+  <p class="pullquote lang-fade" data-key="quote"></p>
+  <span class="pullquote-attr lang-fade" data-key="quoteAttr"></span>
 </div>
 
 <!-- FACTS -->
 <div class="facts-section">
   <div class="section-header reveal">
-    <span class="section-title">FACTS</span>
-    <span class="section-num">— 04 CURATED</span>
+    <span class="section-title lang-fade" data-key="factsTitle"></span>
+    <span class="section-num lang-fade" data-key="factsSub"></span>
   </div>
-  <div class="facts-grid">
-    <div class="fact-item reveal">
-      <span class="fact-number">01</span>
-      <span class="fact-title">Nose Prints</span>
-      <p class="fact-text">A dog's nose print is as unique as a human fingerprint. The ridges and creases form a distinct pattern that can be used for identification — no two are alike in the entire world.</p>
-    </div>
-    <div class="fact-item reveal">
-      <span class="fact-number">02</span>
-      <span class="fact-title">They Dream</span>
-      <p class="fact-text">Dogs experience REM sleep and dream much like humans do. That twitching and whimpering during sleep? They're likely chasing something — or being chased — through remembered landscapes.</p>
-    </div>
-    <div class="fact-item reveal">
-      <span class="fact-number">03</span>
-      <span class="fact-title">300 Million Receptors</span>
-      <p class="fact-text">A dog's sense of smell is 40x more powerful than ours. They can detect cancer, predict seizures hours in advance, and identify a teaspoon of sugar dissolved in a million gallons of water.</p>
-    </div>
-    <div class="fact-item reveal">
-      <span class="fact-number">04</span>
-      <span class="fact-title">Emotional Mirror</span>
-      <p class="fact-text">Dogs are the only non-primate animals that seek eye contact with humans. They evolved to read our faces and emotional states — a skill wolves, their ancestors, do not possess.</p>
-    </div>
-  </div>
+  <div class="facts-grid" id="factsGrid"></div>
 </div>
 
 <!-- PAW DIVIDER -->
 <div class="paw-divider">
-  <span>🐾</span>
-  <span>🐾</span>
-  <span>🐾</span>
-  <span>🐾</span>
-  <span>🐾</span>
+  <span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    犬<span>.</span><br>DOG
-  </div>
-  <div class="footer-text">
-    <p>CANIS LUPUS FAMILIARIS</p>
-    <p>DOMESTICATED ~13,000 BCE</p>
-    <p>——————————————</p>
-    <p>人類最好的朋友</p>
-    <p>THE DOG ENCYCLOPEDIA</p>
-    <p>VOL. 01 · 2026</p>
-  </div>
+  <div class="footer-logo">犬<span>.</span><br>DOG</div>
+  <div class="footer-text lang-fade" data-key="footer"></div>
 </footer>
 
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
+const CONTENT = {
+  en: {
+    eyebrow:      "Vol. 01 — Canine Encyclopedia",
+    heroSubtitle: "The wolf that chose us. From the frozen tundra to city apartments — dogs have walked beside humanity for fifteen thousand years, rewriting their own nature to match ours.",
+    stat1: "Recognized Breeds",
+    stat2: "Dogs on Earth",
+    stat3: "Scent Receptors",
+    stat4: "Years of History",
+    breedsTitle: "BREEDS",
+    breedsSub:   "— 06 SELECTED",
+    factsTitle:  "FACTS",
+    factsSub:    "— 04 CURATED",
+    quote:       "The dog is the only animal that has seen his god.",
+    quoteAttr:   "— Romain Rolland",
+    footer: `<p>CANIS LUPUS FAMILIARIS</p><p>DOMESTICATED ~13,000 BCE</p><p>——————————————</p><p>BEST FRIEND OF HUMANS</p><p>THE DOG ENCYCLOPEDIA</p><p>VOL. 01 · 2026</p>`,
+    ticker: ["🐾 CANIS LUPUS FAMILIARIS","BEST FRIEND OF HUMANS","400+ BREEDS WORLDWIDE","15,000 YEARS OF COMPANIONSHIP","NOSE PRINTS ARE UNIQUE — LIKE FINGERPRINTS","DOGS DREAM DURING REM SLEEP"],
+    breeds: [
+      { icon:"🐕",   name:"Shiba Inu",         desc:"Ancient Japanese spitz — spirited, fastidious, and famously vocal. The internet's favourite philosopher.",        origin:"🗾 Origin: Japan · Antiquity" },
+      { icon:"🦮",   name:"Border Collie",      desc:"The most intelligent breed. Born to herd sheep across Scottish highlands with nothing but a gaze.",               origin:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 Origin: Scotland · 1800s" },
+      { icon:"🐩",   name:"Poodle",             desc:"A water retriever disguised as elegance. Hypoallergenic, hyperintelligent, profoundly misunderstood.",            origin:"🇩🇪 Origin: Germany · 1600s" },
+      { icon:"🐕‍🦺",  name:"Siberian Husky",    desc:"Built for −60 °C. Runs 160 km a day. Howls instead of barks. Descended from ancient Chukchi sled dogs.",        origin:"🇷🇺 Origin: Siberia · Ancient" },
+      { icon:"🦴",   name:"Greyhound",          desc:"72 km/h. Zero body fat. One of the oldest breeds, depicted in ancient Egyptian tomb paintings.",                  origin:"🏺 Origin: Egypt · 4,000 BCE" },
+      { icon:"🐾",   name:"Akita",              desc:"National monument of Japan. Devoted beyond measure — Hachiko waited nine years for a master who never returned.", origin:"🗾 Origin: Japan · 1600s" },
+    ],
+    facts: [
+      { title:"Nose Prints",           text:"A dog's nose print is as unique as a human fingerprint. The ridges and creases form a distinct pattern — no two are alike in the entire world." },
+      { title:"They Dream",            text:"Dogs experience REM sleep and dream much like humans. That twitching during sleep? They're likely chasing something through remembered landscapes." },
+      { title:"300 Million Receptors", text:"A dog's sense of smell is 40× more powerful than ours. They can detect cancer, predict seizures, and smell a teaspoon of sugar in a million gallons of water." },
+      { title:"Emotional Mirror",      text:"Dogs are the only non-primate animals that seek eye contact with humans. They evolved to read our faces — a skill their wolf ancestors do not possess." },
+    ],
+  },
+  ja: {
+    eyebrow:      "Vol. 01 — 犬の百科事典",
+    heroSubtitle: "狼が私たちを選んだ。凍てつく大地から都市のアパートまで——犬は一万五千年もの間、人類の傍らを歩み続け、その本質を私たちに合わせて変えてきた。",
+    stat1: "認定品種",
+    stat2: "世界の犬の数",
+    stat3: "嗅覚受容体",
+    stat4: "歴史（年）",
+    breedsTitle: "品種",
+    breedsSub:   "— 6品種を厳選",
+    factsTitle:  "知識",
+    factsSub:    "— 4つの事実",
+    quote:       "犬は自分の神を見た、唯一の動物である。",
+    quoteAttr:   "— ロマン・ロラン",
+    footer: `<p>学名：カニス・ルプス・ファミリアリス</p><p>家畜化：紀元前約13,000年</p><p>——————————————</p><p>人類最良の友</p><p>犬の百科事典</p><p>VOL. 01 · 2026</p>`,
+    ticker: ["🐾 カニス・ルプス・ファミリアリス","人類最良の友","世界中に400以上の品種","一万五千年の歴史","鼻紋は指紋と同じくユニーク","犬はレム睡眠中に夢を見る"],
+    breeds: [
+      { icon:"🐕",   name:"柴犬",              desc:"古来の日本のスピッツ——勇敢で几帳面、独特の鳴き声で知られる。インターネット界の哲学者。",                                       origin:"🗾 原産地：日本　古来" },
+      { icon:"🦮",   name:"ボーダーコリー",    desc:"最も知性的な犬種。スコットランドの高地で、ただの視線だけで羊を操るために生まれた。",                                              origin:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 原産地：スコットランド　1800年代" },
+      { icon:"🐩",   name:"プードル",          desc:"優雅さに隠れた水中回収犬。アレルギーを起こしにくく、非常に賢く、深く誤解されている。",                                              origin:"🇩🇪 原産地：ドイツ　1600年代" },
+      { icon:"🐕‍🦺",  name:"シベリアンハスキー", desc:"零下60度に耐えられるよう設計された。一日160kmを走り、吠えずに遠吠えするチュクチ族の古代そり犬の末裔。",                       origin:"🇷🇺 原産地：シベリア　古来" },
+      { icon:"🦴",   name:"グレーハウンド",    desc:"時速72km、体脂肪ゼロ。古代エジプトの墓に描かれた、最も歴史ある犬種のひとつ。",                                                    origin:"🏺 原産地：エジプト　紀元前4,000年" },
+      { icon:"🐾",   name:"秋田犬",            desc:"日本の国の天然記念物。比類なき忠誠心——ハチ公は帰らぬ主人を九年間待ち続けた。",                                                    origin:"🗾 原産地：日本　1600年代" },
+    ],
+    facts: [
+      { title:"鼻紋",          text:"犬の鼻紋は人間の指紋と同じようにユニークです。隆起と折れ線が独自のパターンを形成し、世界中に同じものは二つとして存在しません。" },
+      { title:"夢を見る",      text:"犬はレム睡眠を経験し、人間と同様に夢を見ます。眠りながら手足をピクピク動かすのは、記憶の中の風景を追いかけているからかもしれません。" },
+      { title:"3億個の受容体", text:"犬の嗅覚は人間の40倍強力です。癌を発見し、何時間も前に発作を予知し、100万ガロンの水に溶けた小さじ一杯の砂糖を嗅ぎ分けることができます。" },
+      { title:"感情の鏡",      text:"犬は霊長類以外で唯一、人間とアイコンタクトを求める動物です。人間の顔を読み取る能力を進化させました——祖先である狼にはない特殊な能力です。" },
+    ],
+  },
+};
+
+let currentLang = 'en';
+
+function buildTicker(lang) {
+  const items = CONTENT[lang].ticker;
+  return [...items, ...items].map(t =>
+    `<span>${t}</span><span class="ticker-sep">///</span>`
+  ).join('');
+}
+
+function buildBreeds(lang) {
+  return CONTENT[lang].breeds.map(b => `
+    <div class="breed-card reveal">
+      <span class="breed-icon">${b.icon}</span>
+      <span class="breed-name">${b.name}</span>
+      <p class="breed-desc">${b.desc}</p>
+      <span class="breed-origin">${b.origin}</span>
+    </div>`).join('');
+}
+
+function buildFacts(lang) {
+  return CONTENT[lang].facts.map((f, i) => `
+    <div class="fact-item reveal">
+      <span class="fact-number">0${i+1}</span>
+      <span class="fact-title">${f.title}</span>
+      <p class="fact-text">${f.text}</p>
+    </div>`).join('');
+}
+
+function setLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent === lang.toUpperCase()));
+
+  const faders = document.querySelectorAll('.lang-fade');
+  faders.forEach(el => el.classList.add('switching'));
+
+  setTimeout(() => {
+    const c = CONTENT[lang];
+
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const v = c[el.dataset.key];
+      if (v !== undefined) el.innerHTML = v;
     });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
 
-  // Stats counter animation
-  function animateCount(el, target, suffix = '') {
-    const duration = 1500;
-    const start = performance.now();
-    const isB = suffix === 'B';
-    const isM = suffix === 'M';
-    const displayTarget = isB ? 1 : isM ? 300 : target;
+    document.getElementById('tickerInner').innerHTML = buildTicker(lang);
+    document.getElementById('breedsGrid').innerHTML  = buildBreeds(lang);
+    document.getElementById('factsGrid').innerHTML   = buildFacts(lang);
 
-    const update = (now) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(ease * displayTarget);
-      el.textContent = current + suffix + (target > 400 && !isB && !isM ? '+' : '');
-      if (progress < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  }
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+    faders.forEach(el => el.classList.remove('switching'));
+    document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
+  }, 250);
+}
 
-  const statNumbers = document.querySelectorAll('.stat-number');
-  const statTargets = [400, 1, 300, 15];
-  const statSuffixes = ['+', 'B', 'M', 'K'];
+// Initial render
+document.getElementById('tickerInner').innerHTML = buildTicker('en');
+document.getElementById('breedsGrid').innerHTML  = buildBreeds('en');
+document.getElementById('factsGrid').innerHTML   = buildFacts('en');
+const c0 = CONTENT['en'];
+document.querySelectorAll('[data-key]').forEach(el => {
+  const v = c0[el.dataset.key];
+  if (v !== undefined) el.innerHTML = v;
+});
 
-  const statObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const idx = [...statNumbers].indexOf(entry.target);
-        animateCount(entry.target, statTargets[idx], statSuffixes[idx]);
-        statObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  statNumbers.forEach(el => statObserver.observe(el));
-
-  // Cursor paw trail
-  const paws = ['🐾'];
-  document.addEventListener('click', (e) => {
-    const paw = document.createElement('span');
-    paw.textContent = '🐾';
-    paw.style.cssText = `
-      position: fixed;
-      left: ${e.clientX - 12}px;
-      top: ${e.clientY - 12}px;
-      font-size: 20px;
-      pointer-events: none;
-      z-index: 9998;
-      animation: pawFade 0.8s ease forwards;
-    `;
-    document.body.appendChild(paw);
-    setTimeout(() => paw.remove(), 800);
-  });
-
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes pawFade {
-      0%   { opacity: 1; transform: scale(1.5) rotate(-20deg); }
-      100% { opacity: 0; transform: scale(0.5) rotate(20deg) translateY(-20px); }
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      revealObserver.unobserve(entry.target);
     }
-  `;
-  document.head.appendChild(style);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Paw trail on click
+const pawStyle = document.createElement('style');
+pawStyle.textContent = `@keyframes pawFade {
+  0%   { opacity:1; transform:scale(1.5) rotate(-20deg); }
+  100% { opacity:0; transform:scale(0.5) rotate(20deg) translateY(-20px); }
+}`;
+document.head.appendChild(pawStyle);
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.lang-switch')) return;
+  const paw = document.createElement('span');
+  paw.textContent = '🐾';
+  paw.style.cssText = `position:fixed;left:${e.clientX-12}px;top:${e.clientY-12}px;font-size:20px;pointer-events:none;z-index:9998;animation:pawFade 0.8s ease forwards;`;
+  document.body.appendChild(paw);
+  setTimeout(() => paw.remove(), 800);
+});
 </script>
 </body>
 </html>
